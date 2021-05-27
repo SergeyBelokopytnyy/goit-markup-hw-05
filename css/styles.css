@@ -1,8 +1,24 @@
+@keyframes rotateY {
+  0% {
+    transform: perspective(400px) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(400px) rotateY(360deg);
+  }
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   color: var(--primary-text-color);
+  z-index: 2;
+  margin: 0;
+  padding-top: 80px;
 }
-
+header,
+main,
+footer {
+  z-index: 1;
+}
 /* подключаем шрифт к логотипу */
 
 .logo,
@@ -18,6 +34,10 @@ body {
   --secondary-text-color: #212121;
   --text-address-color: rgba(255, 255, 255, 0.6);
   --social-background-foot: rgba(255, 255, 255, 0.1);
+  --overlay-cards-color: rgba(33, 150, 243, 0.9);
+  --work-item-color: rgba(47, 48, 58, 0.8);
+  --backdrop-color: rgba(0, 0, 0, 0.2);
+  --icon-close-color: rgba(0, 0, 0, 0.1);
   --text-logo-color: #000000;
   --white-color: #ffffff;
   --section-color: #f5f4fa;
@@ -75,6 +95,11 @@ img {
 /* ЦВЕТОВАЯ РАЗМЕТКА СЕКЦИЙ */
 
 .header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  min-height: 80px;
   background-color: var(--white-color);
   border-bottom: 1px solid var(--border-header-color);
   padding-bottom: 24px;
@@ -84,6 +109,7 @@ img {
 /* ДОБАВЛЯЕМ В СЕКЦИЮ ГЕРОЙ ИЗОБРАЖЕНИЕ И ГРАДИЕНТ */
 
 .hero {
+  position: relative;
   background-color: var(--footer-color);
   padding-top: 200px;
   padding-bottom: 200px;
@@ -129,6 +155,10 @@ footer {
   border-radius: 4px;
   padding: 6px 22px;
   border-color: transparent;
+
+  transition-property: background-color, color, box-shadow;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .portfol-item:not(:last-child) {
   margin-right: 8px;
@@ -215,6 +245,10 @@ footer {
   font-size: 14px;
   font-weight: 500;
   line-height: 1.2;
+
+  transition-property: color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .site-nav-list a:hover,
 .site-nav-list a:focus {
@@ -233,6 +267,10 @@ footer {
 .contact-list {
   display: flex;
   align-items: center;
+
+  transition-property: color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .contact-list:focus,
@@ -244,14 +282,20 @@ footer {
   fill: var(--accent-color);
 }
 
-/* .current::after {
+.current {
+  position: relative;
+}
+
+.current::after {
+  position: absolute;
+  bottom: -200%;
   display: block;
   content: '';
   width: 100%;
   height: 4px;
   background-color: var(--accent-color);
   border-radius: 2px;
-} */
+}
 
 /* АДРЕСА ДЛЯ ФУТЕРА */
 
@@ -278,6 +322,10 @@ footer {
   display: flex;
   margin-right: 10px;
   fill: var(--primary-text-color);
+
+  transition-property: fill;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .container-foot {
   padding-bottom: 60px;
@@ -358,12 +406,28 @@ footer {
   margin-bottom: 50px;
 }
 .work-item {
+  position: relative;
   margin-top: 30px;
   margin-left: 30px;
 }
 .work-list {
   margin-top: -30px;
   margin-left: -30px;
+}
+.work-item-title {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 14px;
+  color: var(--white-color);
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 1.2;
+  padding-top: 27px;
+  padding-right: 82px;
+  padding-bottom: 27px;
+  padding-left: 83px;
+  background-color: var(--work-item-color);
 }
 
 /* НАША КОМАНДА */
@@ -415,6 +479,10 @@ footer {
 
 .social-list-icon {
   fill: var(--border-clients-color);
+
+  transition-property: fill;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .social-list-link {
@@ -425,6 +493,10 @@ footer {
   height: 44px;
   background-color: var(--white-color);
   border-radius: 50%;
+
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .social-list-link:focus,
 .social-list-link:hover {
@@ -444,7 +516,7 @@ footer {
   margin-bottom: 4px;
 }
 
-.project-list p {
+.project-cards-text {
   line-height: 1.9;
   font-size: 16px;
 }
@@ -469,10 +541,65 @@ footer {
   border-top: none;
 }
 
+.project-item {
+  transition-property: box-shadow;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .project-item:hover {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
   cursor: pointer;
+}
+
+/* ДОБАВЛЯЕМ ОВЕРЛАЙ С ТЕКСТОМ К КАРТОЧКАМ */
+
+.project-thumb {
+  position: relative;
+  overflow: hidden;
+}
+.overlay-text {
+  padding: 63px 24px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  opacity: 0;
+  transform: translateY(100%);
+
+  transition-property: opacity, transform;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.project-item:hover .overlay-text,
+.project-item:focus .overlay-text {
+  opacity: 1;
+  transform: translateY(0);
+}
+.project-item:hover .project-thumb::before,
+.project-item:focus .project-thumb::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+.project-thumb::before {
+  display: inline-block;
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay-cards-color);
+  opacity: 0;
+  transform: translateY(100%);
+
+  transition-property: opacity, transform;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ФЛЕКСЫ В ГОЛОВЕ САЙТА */
@@ -544,6 +671,10 @@ header .container {
   border-radius: 4px;
   cursor: pointer;
   padding: 16px 32px;
+
+  transition-property: border-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .icon-company {
@@ -560,6 +691,10 @@ header .container {
 
 .clients-company {
   fill: var(--border-clients-color);
+
+  transition-property: fill;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .clients-item:focus,
@@ -570,4 +705,61 @@ header .container {
 .clients-item:focus .clients-company,
 .clients-item:hover .clients-company {
   fill: var(--accent-color);
+}
+
+/* СОЗДАЕМ БЭКДРОП */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--backdrop-color);
+  z-index: 3;
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* СОЗДАЕМ МОДАЛЬНОЕ ОКНО */
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 528px;
+  height: 581px;
+  background-color: var(--white-color);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+/* РАБОТАЕМ С КНОПКОЙ ЗАКРЫТЬ */
+
+.icon-close-border {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: 1px solid var(--icon-close-color);
+
+  transition-property: fill;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  animation: rotateY 2500ms infinite alternate ease-in-out 2000ms;
+}
+
+.icon-close-border:hover,
+.icon-close-border:focus {
+  fill: var(--accent-color);
+  cursor: pointer;
 }
