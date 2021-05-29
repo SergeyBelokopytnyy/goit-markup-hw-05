@@ -520,9 +520,10 @@ footer {
   margin-bottom: 4px;
 }
 
-.project-cards-text {
+.project-cards .project-cards-text {
   line-height: 1.9;
   font-size: 16px;
+  color: var(--primary-text-color);
 }
 
 .project-item {
@@ -563,6 +564,7 @@ footer {
   position: relative;
   overflow: hidden;
 }
+
 .overlay-text {
   padding: 63px 24px;
   position: absolute;
